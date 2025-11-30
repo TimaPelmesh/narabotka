@@ -9,37 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        // Применяем сохраненные настройки до загрузки страницы
-        (function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const savedLanguage = localStorage.getItem('language') || 'ru';
-            document.documentElement.lang = savedLanguage;
-            const isDark = savedTheme === 'dark' || (savedTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-            
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('theme-dark');
-            } else if (savedTheme === 'light') {
-                document.documentElement.classList.add('theme-light');
-            } else if (savedTheme === 'auto') {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.classList.add(prefersDark ? 'theme-dark' : 'theme-light');
-            }
-            
-            // Переключаем логотип сразу
-            if (isDark) {
-                document.addEventListener('DOMContentLoaded', function() {
-                    const logoImages = document.querySelectorAll('.logo-img');
-                    logoImages.forEach(img => {
-                        if (!img.dataset.originalSrc) {
-                            img.dataset.originalSrc = img.src;
-                        }
-                        img.src = 'logo_dark.png';
-                    });
-                });
-            }
-        })();
-    </script>
+    <script src="init-theme.js"></script>
 </head>
 <body>
     <!-- Header -->
@@ -185,6 +155,16 @@
                         <h1 class="welcome-title" data-i18n="welcome-title">Добро пожаловать, Иван</h1>
                         <p class="welcome-subtitle" data-i18n="welcome-subtitle">Обзор вашего инвестиционного портфеля</p>
                     </div>
+                    <button class="privacy-toggle" id="privacyToggleStat" aria-label="Скрыть/показать цифры">
+                        <svg class="eye-icon-stat eye-open-stat" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <svg class="eye-icon-stat eye-closed-stat" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                            <path d="M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68192 3.96914 7.65663 6.06 6.06M9.9 4.24C10.5883 4.0789 11.2931 3.99836 12 4C19 4 23 12 23 12C22.393 13.1356 21.6691 14.2048 20.84 15.19M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1751 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29439 13.572 9.14351 13.1985C8.99262 12.825 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4859 9.58525 10.1546 9.88 9.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M1 1L23 23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
                 </div>
             </section>
 
@@ -200,16 +180,6 @@
                             </svg>
                         </div>
                         <div class="stat-label" data-i18n="stat-total-value">Общая стоимость портфеля</div>
-                        <button class="privacy-toggle-stat" id="privacyToggleStat" aria-label="Скрыть/показать цифры">
-                            <svg class="eye-icon-stat eye-open-stat" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12C23 12 19 20 12 20C5 20 1 12 1 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                            <svg class="eye-icon-stat eye-closed-stat" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="display: none;">
-                                <path d="M17.94 17.94C16.2306 19.243 14.1491 19.9649 12 20C5 20 1 12 1 12C2.24389 9.68192 3.96914 7.65663 6.06 6.06M9.9 4.24C10.5883 4.0789 11.2931 3.99836 12 4C19 4 23 12 23 12C22.393 13.1356 21.6691 14.2048 20.84 15.19M14.12 14.12C13.8454 14.4148 13.5141 14.6512 13.1462 14.8151C12.7782 14.9791 12.3809 15.0673 11.9781 15.0744C11.5753 15.0815 11.1751 15.0074 10.8016 14.8565C10.4281 14.7056 10.0887 14.4811 9.80385 14.1962C9.51897 13.9113 9.29439 13.572 9.14351 13.1985C8.99262 12.825 8.91853 12.4247 8.92563 12.0219C8.93274 11.6191 9.02091 11.2218 9.18488 10.8538C9.34884 10.4859 9.58525 10.1546 9.88 9.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M1 1L23 23" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </button>
                     </div>
                     <div class="stat-value" data-value="₽ 2 450 000">₽ 2 450 000</div>
                     <div class="stat-change positive" data-value="+12.5% за месяц" data-i18n="stat-change-month">+12.5% за месяц</div>

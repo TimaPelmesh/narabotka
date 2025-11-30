@@ -314,6 +314,7 @@ body {
     justify-content: center;
     color: var(--alpha-dark-gray);
     flex-shrink: 0;
+    margin-top: 4px;
 }
 
 .privacy-toggle:hover {
@@ -324,6 +325,12 @@ body {
 .eye-icon {
     width: 24px;
     height: 24px;
+    stroke-width: 2;
+}
+
+.eye-icon-stat {
+    width: 20px;
+    height: 20px;
     stroke-width: 2;
 }
 

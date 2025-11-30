@@ -166,8 +166,8 @@ const translations = {
         // Общее
         'positive': 'положительное',
         'negative': 'отрицательное'
-    }
-};
+    },
+    en: {
         // Navigation
         'nav-dashboard': 'Dashboard',
         'nav-portfolio': 'Portfolio',
@@ -362,26 +362,29 @@ function updateLogo(theme) {
 function applyTheme(theme) {
     const html = document.documentElement;
     
+    // ВАЖНО: Сначала убираем все классы тем
+    html.classList.remove('theme-dark', 'theme-light');
+    
     if (theme === 'dark') {
         html.classList.add('theme-dark');
-        html.classList.remove('theme-light');
         updateLogo('dark');
     } else if (theme === 'light') {
         html.classList.add('theme-light');
-        html.classList.remove('theme-dark');
         updateLogo('light');
     } else if (theme === 'auto') {
         // Автоматическая тема на основе системных настроек
         const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
         if (prefersDark) {
             html.classList.add('theme-dark');
-            html.classList.remove('theme-light');
             updateLogo('dark');
         } else {
             html.classList.add('theme-light');
-            html.classList.remove('theme-dark');
             updateLogo('light');
         }
+    } else {
+        // Fallback: всегда светлая тема по умолчанию
+        html.classList.add('theme-light');
+        updateLogo('light');
     }
     
     // Обновляем графики при смене темы
@@ -571,12 +574,19 @@ function applyLanguage(lang) {
 
 // Загрузка сохраненных настроек
 function loadSettings() {
-    const savedTheme = localStorage.getItem('theme') || 'light';
+    // Убеждаемся, что по умолчанию установлена светлая тема
+    let savedTheme = localStorage.getItem('theme');
+    if (!savedTheme || (savedTheme !== 'light' && savedTheme !== 'dark' && savedTheme !== 'auto')) {
+        savedTheme = 'light';
+        localStorage.setItem('theme', 'light');
+    }
     
     // Применяем настройки
     applyLanguage('ru');
-    applyTheme(savedTheme);
     
+    // ВСЕГДА применяем тему - это гарантирует правильное состояние
+applyTheme(savedTheme);
+
     // Обновляем графики после применения темы
     setTimeout(() => {
         updateChartsTheme();
@@ -598,7 +608,12 @@ function loadSettings() {
 // Применяем настройки при загрузке страницы
 function runSettings() {
     loadSettings();
-    initSettingsHandlers();
+    
+    // Инициализируем обработчики после небольшой задержки, чтобы все элементы были готовы
+    setTimeout(function() {
+        initSettingsHandlers();
+    }, 100);
+    
     // Дополнительно применяем язык после небольшой задержки, чтобы все элементы были готовы
     setTimeout(function() {
         if (window.applyLanguage) {
@@ -630,11 +645,36 @@ function initSettingsHandlers() {
     // Используем делегирование событий для надежности
     document.addEventListener('change', function(e) {
         // Обработчик изменения темы
-        if (e.target.name === 'theme' && e.target.type === 'radio') {
+        if (e.target && e.target.name === 'theme' && e.target.type === 'radio' && e.target.checked) {
             const theme = e.target.value;
+            console.log('Тема изменена через делегирование:', theme);
             localStorage.setItem('theme', theme);
-            applyTheme(theme);
-            console.log('Тема изменена на:', theme);
+            
+            // ВАЖНО: Применяем тему немедленно - используем прямую функцию
+            const applyThemeFunc = typeof applyTheme === 'function' ? applyTheme : (typeof window.applyTheme === 'function' ? window.applyTheme : null);
+            if (applyThemeFunc) {
+                applyThemeFunc(theme);
+                // Дополнительная проверка через небольшую задержку
+                setTimeout(function() {
+                    const html = document.documentElement;
+                    if (theme === 'dark' && !html.classList.contains('theme-dark')) {
+                        html.classList.remove('theme-light');
+                        html.classList.add('theme-dark');
+                    } else if (theme === 'light' && !html.classList.contains('theme-light')) {
+                        html.classList.remove('theme-dark');
+                        html.classList.add('theme-light');
+                    } else if (theme === 'auto') {
+                        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                        if (prefersDark && !html.classList.contains('theme-dark')) {
+                            html.classList.remove('theme-light');
+                            html.classList.add('theme-dark');
+                        } else if (!prefersDark && !html.classList.contains('theme-light')) {
+                            html.classList.remove('theme-dark');
+                            html.classList.add('theme-light');
+                        }
+                    }
+                }, 50);
+            }
             
             const themeNames = {
                 light: 'Светлая',
@@ -645,6 +685,64 @@ function initSettingsHandlers() {
             showNotification(`Тема изменена на: ${themeName}`);
         }
     });
+    
+    // Также добавляем обработчики напрямую к радиокнопкам для надежности
+    // Делаем это с задержкой, чтобы элементы точно были в DOM
+    setTimeout(function() {
+        const themeRadios = document.querySelectorAll('input[name="theme"]');
+        if (themeRadios.length > 0) {
+            themeRadios.forEach(radio => {
+                // Удаляем старые обработчики через клонирование
+                const newRadio = radio.cloneNode(true);
+                if (radio.checked) {
+                    newRadio.checked = true;
+                }
+                radio.parentNode.replaceChild(newRadio, radio);
+                
+                newRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                        const theme = this.value;
+                        console.log('Тема изменена через прямой обработчик:', theme);
+                        localStorage.setItem('theme', theme);
+                        
+                        // ВАЖНО: Применяем тему немедленно
+                        const applyThemeFunc = typeof applyTheme === 'function' ? applyTheme : (typeof window.applyTheme === 'function' ? window.applyTheme : null);
+                        if (applyThemeFunc) {
+                            applyThemeFunc(theme);
+                            // Дополнительная проверка через небольшую задержку
+                            setTimeout(function() {
+                                const html = document.documentElement;
+                                if (theme === 'dark' && !html.classList.contains('theme-dark')) {
+                                    html.classList.remove('theme-light');
+                                    html.classList.add('theme-dark');
+                                } else if (theme === 'light' && !html.classList.contains('theme-light')) {
+                                    html.classList.remove('theme-dark');
+                                    html.classList.add('theme-light');
+                                } else if (theme === 'auto') {
+                                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                                    if (prefersDark && !html.classList.contains('theme-dark')) {
+                                        html.classList.remove('theme-light');
+                                        html.classList.add('theme-dark');
+                                    } else if (!prefersDark && !html.classList.contains('theme-light')) {
+                                        html.classList.remove('theme-dark');
+                                        html.classList.add('theme-light');
+                                    }
+                                }
+                            }, 50);
+                        }
+                        
+                        const themeNames = {
+                            light: 'Светлая',
+                            dark: 'Тёмная',
+                            auto: 'Автоматически'
+                        };
+                        const themeName = themeNames[theme] || theme;
+                        showNotification(`Тема изменена на: ${themeName}`);
+                    }
+                });
+            });
+        }
+    }, 200);
 }
 
 // Функция показа уведомления

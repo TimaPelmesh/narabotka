@@ -9,34 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script>
-        // Применяем сохраненные настройки до загрузки страницы
-        (function() {
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            const savedLanguage = localStorage.getItem('language') || 'ru';
-            const isDark = savedTheme === 'dark' || (savedTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
-            document.documentElement.lang = savedLanguage;
-            if (savedTheme === 'dark') {
-                document.documentElement.classList.add('theme-dark');
-            } else if (savedTheme === 'light') {
-                document.documentElement.classList.add('theme-light');
-            } else if (savedTheme === 'auto') {
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.classList.add(prefersDark ? 'theme-dark' : 'theme-light');
-            }
-            if (isDark) {
-                document.addEventListener('DOMContentLoaded', function() {
-                    const logoImages = document.querySelectorAll('.logo-img');
-                    logoImages.forEach(img => {
-                        if (!img.dataset.originalSrc) {
-                            img.dataset.originalSrc = img.src;
-                        }
-                        img.src = 'logo_dark.png';
-                    });
-                });
-            }
-        })();
-    </script>
+    <script src="init-theme.js"></script>
 </head>
 <body>
     <!-- Header -->

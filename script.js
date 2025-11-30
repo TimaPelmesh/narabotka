@@ -1,8 +1,10 @@
 // Загрузка и применение сохраненных настроек (тема и язык)
+// Примечание: инициализация темы теперь происходит через init-theme.js в <head>
+// Этот скрипт используется только для обновления темы после загрузки страницы
 (function() {
     'use strict';
     
-    // Функция переключения логотипа
+    // Функция переключения логотипа (используется settings.js)
     function updateLogo(theme) {
         const logoImages = document.querySelectorAll('.logo-img');
         const isDark = theme === 'dark' || (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
@@ -23,40 +25,44 @@
         });
     }
     
-    // Функция применения темы
+    // Функция применения темы (используется settings.js)
     function applyTheme(theme) {
         const html = document.documentElement;
         
+        // ВАЖНО: Сначала убираем все классы тем
+        html.classList.remove('theme-dark', 'theme-light');
+        
         if (theme === 'dark') {
             html.classList.add('theme-dark');
-            html.classList.remove('theme-light');
             updateLogo('dark');
         } else if (theme === 'light') {
             html.classList.add('theme-light');
-            html.classList.remove('theme-dark');
             updateLogo('light');
         } else if (theme === 'auto') {
             const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
             if (prefersDark) {
                 html.classList.add('theme-dark');
-                html.classList.remove('theme-light');
                 updateLogo('dark');
             } else {
                 html.classList.add('theme-light');
-                html.classList.remove('theme-dark');
                 updateLogo('light');
             }
+        } else {
+            // Fallback: всегда светлая тема по умолчанию
+            html.classList.add('theme-light');
+            updateLogo('light');
         }
     }
     
-    // Загружаем сохраненные настройки
+    // Экспортируем функции для использования в settings.js
+    if (typeof window !== 'undefined') {
+        window.updateLogo = updateLogo;
+        window.applyTheme = applyTheme;
+    }
+    
+    // Применяем язык после загрузки DOM
     const savedLanguage = localStorage.getItem('language') || 'ru';
-    const savedTheme = localStorage.getItem('theme') || 'light';
     
-    // Применяем тему сразу при загрузке скрипта
-    applyTheme(savedTheme);
-    
-    // Применяем язык после загрузки DOM, чтобы функции из settings.js были доступны
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', function() {
             // Используем функцию из settings.js, если она доступна
@@ -85,16 +91,6 @@
                 }
             }, 100);
         }
-    }
-    
-    // Слушаем изменения системной темы, если выбрана автоматическая
-    if (savedTheme === 'auto') {
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
-            const currentTheme = localStorage.getItem('theme') || 'light';
-            if (currentTheme === 'auto') {
-                applyTheme('auto');
-            }
-        });
     }
 })();
 
