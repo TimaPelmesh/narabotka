@@ -97,6 +97,8 @@
 // Portfolio Chart with detailed data
 const portfolioCtx = document.getElementById('portfolioChart');
 let portfolioChart = null;
+// Экспортируем portfolioChart в глобальную область для обновления при смене темы
+window.portfolioChart = portfolioChart;
 
 // Detailed data for different periods
 const chartData = {
@@ -194,12 +196,9 @@ window.initPortfolioChart = function initPortfolioChart(period = '1М') {
                             weight: '500'
                         },
                         color: isDark ? '#FFFFFF' : '#000000',
-                        font: {
-                            size: 13,
-                            weight: '500',
-                            color: isDark ? '#FFFFFF' : '#000000'
-                        },
                         generateLabels: function(chart) {
+                            const isDarkMode = document.documentElement.classList.contains('theme-dark');
+                            const legendColor = isDarkMode ? '#FFFFFF' : '#000000';
                             return [
                                 {
                                     text: 'Ваш портфель',
@@ -207,7 +206,8 @@ window.initPortfolioChart = function initPortfolioChart(period = '1М') {
                                     strokeStyle: '#EF3124',
                                     lineWidth: 3,
                                     hidden: false,
-                                    index: 0
+                                    index: 0,
+                                    fontColor: legendColor
                                 },
                                 {
                                     text: 'Индекс МосБиржи',
@@ -216,7 +216,8 @@ window.initPortfolioChart = function initPortfolioChart(period = '1М') {
                                     lineWidth: 2,
                                     lineDash: [5, 5],
                                     hidden: false,
-                                    index: 1
+                                    index: 1,
+                                    fontColor: legendColor
                                 }
                             ];
                         }
@@ -309,6 +310,9 @@ window.initPortfolioChart = function initPortfolioChart(period = '1М') {
             }
         }
     });
+    
+    // Обновляем глобальную переменную для доступа из других скриптов
+    window.portfolioChart = portfolioChart;
 }
 
 if (portfolioCtx) {

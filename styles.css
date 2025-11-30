@@ -2544,7 +2544,7 @@ body.privacy-mode .eye-closed {
 }
 
 .theme-dark .card-title {
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .result-note p {
