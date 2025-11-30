@@ -109,7 +109,6 @@ const translations = {
         // Настройки
         'settings-title': 'Настройки',
         'settings-subtitle': 'Управление параметрами приложения',
-        'settings-language': 'Язык',
         'settings-theme': 'Тема оформления',
         'settings-light': 'Светлая',
         'settings-dark': 'Тёмная',
@@ -167,8 +166,8 @@ const translations = {
         // Общее
         'positive': 'положительное',
         'negative': 'отрицательное'
-    },
-    en: {
+    }
+};
         // Navigation
         'nav-dashboard': 'Dashboard',
         'nav-portfolio': 'Portfolio',
@@ -516,12 +515,12 @@ function updateChartsTheme() {
     }, 100);
 }
 
-// Функция применения языка
+// Функция применения языка (всегда русский)
 function applyLanguage(lang) {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = 'ru';
     
-    // Переключаем текст интерфейса
-    const texts = translations[lang] || translations.ru;
+    // Всегда используем русский язык
+    const texts = translations.ru;
     
     // Обновляем элементы с data-i18n атрибутами (вызываем дважды для надежности)
     function updateI18nElements() {
@@ -557,66 +556,6 @@ function applyLanguage(lang) {
     // Вызываем еще раз через небольшую задержку для динамически загруженных элементов
     setTimeout(updateI18nElements, 50);
     
-    // Обновляем навигацию
-    const navLinks = {
-        'index.html': { ru: 'Дашборд', en: 'Dashboard' },
-        'portfolio.html': { ru: 'Портфель', en: 'Portfolio' },
-        'analytics.html': { ru: 'Аналитика', en: 'Analytics' },
-        'calculator.html': { ru: 'Калькулятор', en: 'Calculator' },
-        'settings.html': { ru: 'Настройки', en: 'Settings' }
-    };
-    
-    document.querySelectorAll('.nav-link').forEach(link => {
-        const href = link.getAttribute('href');
-        if (href && navLinks[href]) {
-            link.textContent = navLinks[href][lang] || navLinks[href]['ru'];
-        }
-    });
-    
-    
-    // Обновляем title страницы
-    const pageTitle = document.querySelector('title');
-    if (pageTitle) {
-        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        const titles = {
-            'index.html': { ru: 'Альфа-Банк | Инвестиционный портал', en: 'Dashboard | Alfa-Bank Investments' },
-            'portfolio.html': { ru: 'Портфель | Альфа-Банк Инвестиции', en: 'Portfolio | Alfa-Bank Investments' },
-            'analytics.html': { ru: 'Аналитика | Альфа-Банк Инвестиции', en: 'Analytics | Alfa-Bank Investments' },
-            'calculator.html': { ru: 'Калькулятор | Альфа-Банк Инвестиции', en: 'Calculator | Alfa-Bank Investments' },
-            'settings.html': { ru: 'Настройки | Альфа-Банк Инвестиции', en: 'Settings | Alfa-Bank Investments' }
-        };
-        
-        if (titles[currentPage]) {
-            pageTitle.textContent = titles[currentPage][lang] || titles[currentPage]['ru'];
-        }
-    }
-    
-    // Обновляем меню пользователя
-    const menuItems = {
-        '.menu-item[href="index.html"]': { ru: 'Дашборд', en: 'Dashboard' },
-        '.menu-item[href="portfolio.html"]': { ru: 'Портфель', en: 'Portfolio' },
-        '.menu-item[href="analytics.html"]': { ru: 'Аналитика', en: 'Analytics' },
-        '.menu-item[href="calculator.html"]': { ru: 'Калькулятор', en: 'Calculator' },
-        '.menu-item[href="settings.html"]': { ru: 'Настройки', en: 'Settings' },
-        '.menu-item[href="community.html"]': { ru: 'Сообщество', en: 'Community' },
-        '.menu-item[href="vault.html"]': { ru: 'Документы', en: 'Documents' },
-        '.menu-item[href="meetings.html"]': { ru: 'Встречи', en: 'Meetings' },
-        '.menu-item[href="office.html"]': { ru: 'Офис 2.0', en: 'Office 2.0' },
-        '.menu-item[href="region.html"]': { ru: 'Регион и офисы', en: 'Region and offices' },
-        '.menu-item[href="about.html"]': { ru: 'О сайте', en: 'About' },
-        '.menu-item[href="support.html"]': { ru: 'Техподдержка', en: 'Support' },
-        '.menu-item-danger': { ru: 'Выйти', en: 'Logout' }
-    };
-    
-    Object.keys(menuItems).forEach(selector => {
-        const elements = document.querySelectorAll(selector);
-        elements.forEach(element => {
-            const textNode = Array.from(element.childNodes).find(node => node.nodeType === 3 && node.textContent.trim());
-            if (textNode && menuItems[selector]) {
-                textNode.textContent = menuItems[selector][lang] || menuItems[selector]['ru'];
-            }
-    });
-});
 
     // Обновляем секции меню
     const menuSectionTitle = document.querySelector('.menu-section-title');
@@ -632,11 +571,10 @@ function applyLanguage(lang) {
 
 // Загрузка сохраненных настроек
 function loadSettings() {
-    const savedLanguage = localStorage.getItem('language') || 'ru';
     const savedTheme = localStorage.getItem('theme') || 'light';
     
     // Применяем настройки
-    applyLanguage(savedLanguage);
+    applyLanguage('ru');
     applyTheme(savedTheme);
     
     // Обновляем графики после применения темы
@@ -645,15 +583,7 @@ function loadSettings() {
     }, 200);
     
     // Если мы на странице настроек, устанавливаем значения в радиокнопки
-    const languageRadios = document.querySelectorAll('input[name="language"]');
     const themeRadios = document.querySelectorAll('input[name="theme"]');
-    
-    if (languageRadios.length > 0) {
-        const langRadio = document.querySelector(`input[name="language"][value="${savedLanguage}"]`);
-        if (langRadio) {
-            langRadio.checked = true;
-        }
-    }
     
     if (themeRadios.length > 0) {
         const themeRadio = document.querySelector(`input[name="theme"][value="${savedTheme}"]`);
@@ -662,7 +592,7 @@ function loadSettings() {
         }
     }
     
-    return { savedLanguage, savedTheme };
+    return { savedTheme };
 }
 
 // Применяем настройки при загрузке страницы
@@ -671,11 +601,10 @@ function runSettings() {
     initSettingsHandlers();
     // Дополнительно применяем язык после небольшой задержки, чтобы все элементы были готовы
     setTimeout(function() {
-        const savedLang = localStorage.getItem('language') || 'ru';
         if (window.applyLanguage) {
-            window.applyLanguage(savedLang);
+            window.applyLanguage('ru');
         } else {
-            applyLanguage(savedLang);
+            applyLanguage('ru');
         }
     }, 100);
 }
@@ -700,31 +629,20 @@ function initSettingsHandlers() {
     
     // Используем делегирование событий для надежности
     document.addEventListener('change', function(e) {
-        // Обработчик изменения языка
-        if (e.target.name === 'language' && e.target.type === 'radio') {
-            const lang = e.target.value;
-            localStorage.setItem('language', lang);
-            applyLanguage(lang);
-            console.log('Язык изменен на:', lang);
-            
-            // Показываем уведомление об изменении
-            showNotification(lang === 'ru' ? 'Язык изменен на русский' : 'Language changed to English');
-        }
-        
         // Обработчик изменения темы
         if (e.target.name === 'theme' && e.target.type === 'radio') {
             const theme = e.target.value;
-        localStorage.setItem('theme', theme);
-        applyTheme(theme);
+            localStorage.setItem('theme', theme);
+            applyTheme(theme);
             console.log('Тема изменена на:', theme);
             
-            const savedLanguage = localStorage.getItem('language') || 'ru';
             const themeNames = {
-                ru: { light: 'Светлая', dark: 'Тёмная', auto: 'Автоматически' },
-                en: { light: 'Light', dark: 'Dark', auto: 'Auto' }
+                light: 'Светлая',
+                dark: 'Тёмная',
+                auto: 'Автоматически'
             };
-            const themeName = themeNames[savedLanguage][theme] || theme;
-            showNotification(savedLanguage === 'ru' ? `Тема изменена на: ${themeName}` : `Theme changed to: ${themeName}`);
+            const themeName = themeNames[theme] || theme;
+            showNotification(`Тема изменена на: ${themeName}`);
         }
     });
 }
@@ -779,16 +697,14 @@ if (typeof window !== 'undefined') {
     window.updateLogo = updateLogo;
     window.translations = translations;
     
-    // Функция для получения переведенного текста
+    // Функция для получения переведенного текста (всегда русский)
     window.t = function(key) {
-        const lang = document.documentElement.lang || localStorage.getItem('language') || 'ru';
-        return translations[lang] && translations[lang][key] ? translations[lang][key] : (translations.ru[key] || key);
+        return translations.ru[key] || key;
     };
     
     // Применяем язык сразу после экспорта, если DOM готов
     if (document.readyState !== 'loading') {
-        const savedLang = localStorage.getItem('language') || 'ru';
-        applyLanguage(savedLang);
+        applyLanguage('ru');
         const savedTheme = localStorage.getItem('theme') || 'light';
         updateLogo(savedTheme);
     }

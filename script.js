@@ -576,3 +576,38 @@ if (userMenuBtn && userMenu) {
     }
 })();
 
+// Инициализация страниц
+(function() {
+    'use strict';
+    
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() {
+            initPage(currentPage);
+        });
+    } else {
+        initPage(currentPage);
+    }
+    
+    function initPage(page) {
+        switch(page) {
+            case 'office.html':
+                if (window.initOffice) window.initOffice();
+                break;
+            case 'region.html':
+                if (window.initRegion) window.initRegion();
+                break;
+            case 'meetings.html':
+                if (window.initMeetings) window.initMeetings();
+                break;
+            case 'vault.html':
+                if (window.initVault) window.initVault();
+                break;
+            case 'community.html':
+                if (window.initCommunity) window.initCommunity();
+                break;
+        }
+    }
+})();
+

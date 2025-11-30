@@ -1,191 +1,241 @@
-// Region functionality
-(function() {
-    'use strict';
-    
-    const officesList = document.getElementById('officesList');
-    const mapBox = document.getElementById('mapBox');
-    
-    const offices = [
-        {
-            id: 1,
-            name: 'Центральный офис',
-            address: 'Москва, ул. Тверская, д. 12',
-            phone: '+7 (495) 123-45-67',
-            hours: 'Пн-Пт: 9:00 - 20:00',
-            services: ['Кредитование', 'Инвестиции', 'Консультации'],
-            coordinates: { lat: 55.7558, lng: 37.6173 }
-        },
-        {
-            id: 2,
-            name: 'Офис на Арбате',
-            address: 'Москва, ул. Арбат, д. 25',
-            phone: '+7 (495) 234-56-78',
-            hours: 'Пн-Пт: 10:00 - 19:00',
-            services: ['Кредитование', 'Консультации'],
-            coordinates: { lat: 55.7520, lng: 37.5920 }
-        },
-        {
-            id: 3,
-            name: 'Офис в БЦ "Москва-Сити"',
-            address: 'Москва, Пресненская наб., д. 8',
-            phone: '+7 (495) 345-67-89',
-            hours: 'Пн-Пт: 9:00 - 18:00',
-            services: ['Инвестиции', 'Премиум-обслуживание'],
-            coordinates: { lat: 55.7489, lng: 37.5369 }
-        },
-        {
-            id: 4,
-            name: 'Офис на Ленинском',
-            address: 'Москва, Ленинский пр-т, д. 100',
-            phone: '+7 (495) 456-78-90',
-            hours: 'Пн-Пт: 9:00 - 20:00, Сб: 10:00 - 16:00',
-            services: ['Кредитование', 'Инвестиции', 'Консультации'],
-            coordinates: { lat: 55.6892, lng: 37.5528 }
-        },
-        {
-            id: 5,
-            name: 'Офис в Сколково',
-            address: 'Москва, Сколково, ул. Нобеля, д. 5',
-            phone: '+7 (495) 567-89-01',
-            hours: 'Пн-Пт: 9:00 - 18:00',
-            services: ['Инвестиции', 'Консультации'],
-            coordinates: { lat: 55.7000, lng: 37.4000 }
-        }
-    ];
-    
-    function init() {
-        renderOffices();
-        initMap();
-    }
-    
-    function renderOffices() {
-        if (!officesList) return;
-        
-        officesList.innerHTML = '';
-        
-        offices.forEach(office => {
-            const officeEl = document.createElement('div');
-            officeEl.className = 'office-item';
-            officeEl.dataset.officeId = office.id;
-            
-            officeEl.innerHTML = `
-                <div class="office-header">
-                    <h3 class="office-name">${office.name}</h3>
-                    <button class="office-toggle" aria-label="Показать детали">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="office-details" style="display: none;">
-                    <div class="office-info">
-                        <div class="office-info-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2"/>
-                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                            <span>${office.address}</span>
-                        </div>
-                        <div class="office-info-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7292C21.7209 20.9841 21.5573 21.2126 21.352 21.3992C21.1467 21.5858 20.9041 21.7262 20.6397 21.8116C20.3752 21.897 20.0952 21.9254 19.82 21.895C16.7428 21.6046 13.787 20.4271 11.19 18.465C8.77382 16.6631 6.72533 14.4045 5.17 11.82C3.24738 8.50662 2.00394 4.77159 1.52 0.895004C1.48958 0.619508 1.51826 0.33978 1.60395 0.0755382C1.68965 -0.188703 1.8303 -0.431039 2.017 -0.636004C2.2037 -0.840969 2.43233 -1.00405 2.68733 -1.115C2.94233 -1.22595 3.21809 -1.28219 3.49659 -1.28001C3.77509 -1.27782 4.04991 -1.21735 4.30299 -1.10201L7.15299 2.14201C7.52046 2.342 7.81699 2.64248 8.00874 3.00473C8.20049 3.36698 8.28028 3.77454 8.23999 4.17801L7.75999 7.87801C7.71099 8.27226 7.76318 8.67107 7.91099 9.03801C8.05881 9.40495 8.29728 9.72739 8.60299 9.97201L11.143 12.142C11.4487 12.3866 11.7871 12.6251 12.153 12.773C12.5199 12.9208 12.9187 12.973 13.313 12.924L17.013 12.444C17.4164 12.4037 17.824 12.4835 18.1862 12.6752C18.5485 12.867 18.849 13.1635 19.049 13.531L22.089 16.381C22.4643 16.619 22.7806 16.9401 22.9999 17.3128C23.2192 17.6855 23.3361 18.0994 23.34 18.52L22.34 18.52Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                            <span>${office.phone}</span>
-                        </div>
-                        <div class="office-info-item">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
-                                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            </svg>
-                            <span>${office.hours}</span>
-                        </div>
-                    </div>
-                    <div class="office-services">
-                        <div class="office-services-label">Услуги:</div>
-                        <div class="office-services-list">
-                            ${office.services.map(service => `<span class="office-service-tag">${service}</span>`).join('')}
-                        </div>
-                    </div>
-                    <button class="btn btn-primary btn-sm office-select-btn" data-office-id="${office.id}">Выбрать офис</button>
-                </div>
-            `;
-            
-            officesList.appendChild(officeEl);
-        });
-        
-        // Add toggle handlers
-        officesList.querySelectorAll('.office-toggle').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const officeItem = this.closest('.office-item');
-                const details = officeItem.querySelector('.office-details');
-                const isOpen = details.style.display !== 'none';
-                
-                details.style.display = isOpen ? 'none' : 'block';
-                this.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
-            });
-        });
-        
-        // Add select handlers
-        officesList.querySelectorAll('.office-select-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const officeId = parseInt(this.getAttribute('data-office-id'));
-                const office = offices.find(o => o.id === officeId);
-                if (office) {
-                    const officeSelected = window.t ? window.t('alert-office-selected') : 'Выбран офис';
-                    alert(`${officeSelected}: ${office.name}\n${office.address}`);
-                }
-            });
-        });
-    }
-    
-    function initMap() {
-        if (!mapBox) return;
-        
-        // Простая интерактивная карта с маркерами
-        const mapContent = document.createElement('div');
-        mapContent.className = 'map-content';
-        mapContent.innerHTML = `
-            <div class="map-markers">
-                ${offices.map((office, index) => `
-                    <div class="map-marker" style="left: ${20 + index * 15}%; top: ${30 + index * 10}%;" data-office-id="${office.id}">
-                        <div class="marker-pin"></div>
-                        <div class="marker-tooltip">${office.name}</div>
-                    </div>
-                `).join('')}
-            </div>
-        `;
-        
-        mapBox.innerHTML = '';
-        mapBox.appendChild(mapContent);
-        
-        // Add marker click handlers
-        mapContent.querySelectorAll('.map-marker').forEach(marker => {
-            marker.addEventListener('click', function() {
-                const officeId = parseInt(this.getAttribute('data-office-id'));
-                const office = offices.find(o => o.id === officeId);
-                if (office) {
-                    // Scroll to office in list
-                    const officeItem = document.querySelector(`.office-item[data-office-id="${officeId}"]`);
-                    if (officeItem) {
-                        officeItem.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        // Open details
-                        const details = officeItem.querySelector('.office-details');
-                        const toggle = officeItem.querySelector('.office-toggle');
-                        if (details && toggle) {
-                            details.style.display = 'block';
-                            toggle.style.transform = 'rotate(180deg)';
-                        }
-                    }
-                }
-            });
-        });
-    }
-    
-    // Initialize on DOM ready
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', init);
-    } else {
-        init();
-    }
-})();
+// Region functionality - copied from наработки
+async function initRegion() {
+  const mapBox = document.getElementById('mapBox');
+  const officesList = document.getElementById('officesList');
+  if (!mapBox || !officesList) return;
 
+  const offices = [
+    { 
+      id: 'O1', 
+      name: 'Центральный офис', 
+      address: 'ул. Тверская, 12, стр. 1, Москва', 
+      lead: 'Анна Петрова', 
+      phone: '+7 (495) 123-45-67', 
+      x: 18, 
+      y: 20,
+      services: ['Кредиты', 'ИП', 'Консультации'],
+      workingHours: '9:00 - 21:00'
+    },
+    { 
+      id: 'O2', 
+      name: 'Филиал "Арбат"', 
+      address: 'ул. Арбат, 25, Москва', 
+      lead: 'Михаил Сидоров', 
+      phone: '+7 (495) 234-56-78', 
+      x: 75, 
+      y: 35,
+      services: ['ИП', 'Налоги'],
+      workingHours: '10:00 - 20:00'
+    },
+    { 
+      id: 'O3', 
+      name: 'Филиал "Красная Площадь"', 
+      address: 'Красная площадь, 1, Москва', 
+      lead: 'Елена Козлова', 
+      phone: '+7 (495) 345-67-89', 
+      x: 85, 
+      y: 75,
+      services: ['VIP-обслуживание', 'Кредиты'],
+      workingHours: '8:00 - 22:00'
+    }
+  ];
+
+  function paintMap() {
+    mapBox.innerHTML = '';
+    
+    // Добавляем фоновые элементы (дома и дороги)
+    addMapBackground();
+    
+    // Добавляем маркеры офисов
+    offices.forEach((office, index) => {
+      const pin = document.createElement('div');
+      pin.className = 'map-pin';
+      pin.style.left = office.x + '%';
+      pin.style.top = office.y + '%';
+      pin.setAttribute('data-office', office.id);
+      pin.setAttribute('title', `${office.name}\n${office.address}`);
+      pin.setAttribute('role', 'button');
+      pin.setAttribute('tabindex', '0');
+      
+      // Добавляем номер офиса на маркер
+      const pinNumber = document.createElement('div');
+      pinNumber.className = 'pin-number';
+      pinNumber.textContent = index + 1;
+      pin.appendChild(pinNumber);
+      
+      mapBox.appendChild(pin);
+    });
+  }
+
+  function addMapBackground() {
+    // Создаем дороги
+    const roads = [
+      { type: 'horizontal', top: '20%', left: '0%', width: '100%', height: '2px' },
+      { type: 'horizontal', top: '40%', left: '0%', width: '100%', height: '2px' },
+      { type: 'horizontal', top: '60%', left: '0%', width: '100%', height: '2px' },
+      { type: 'horizontal', top: '80%', left: '0%', width: '100%', height: '2px' },
+      { type: 'vertical', top: '0%', left: '20%', width: '2px', height: '100%' },
+      { type: 'vertical', top: '0%', left: '40%', width: '2px', height: '100%' },
+      { type: 'vertical', top: '0%', left: '60%', width: '2px', height: '100%' },
+      { type: 'vertical', top: '0%', left: '80%', width: '2px', height: '100%' }
+    ];
+
+    roads.forEach(road => {
+      const roadEl = document.createElement('div');
+      roadEl.className = 'map-road';
+      roadEl.style.position = 'absolute';
+      roadEl.style.top = road.top;
+      roadEl.style.left = road.left;
+      roadEl.style.width = road.width;
+      roadEl.style.height = road.height;
+      roadEl.style.backgroundColor = '#e0e0e0';
+      roadEl.style.zIndex = '1';
+      mapBox.appendChild(roadEl);
+    });
+
+    // Создаем здания
+    const buildings = [
+      { top: '10%', left: '10%', width: '15%', height: '20%', color: '#d4d4d4' },
+      { top: '30%', left: '70%', width: '20%', height: '25%', color: '#c8c8c8' },
+      { top: '50%', left: '30%', width: '18%', height: '30%', color: '#d0d0d0' },
+      { top: '70%', left: '60%', width: '25%', height: '15%', color: '#d8d8d8' },
+      { top: '15%', left: '50%', width: '12%', height: '35%', color: '#cccccc' },
+      { top: '60%', left: '10%', width: '16%', height: '25%', color: '#d6d6d6' }
+    ];
+
+    buildings.forEach(building => {
+      const buildingEl = document.createElement('div');
+      buildingEl.className = 'map-building';
+      buildingEl.style.position = 'absolute';
+      buildingEl.style.top = building.top;
+      buildingEl.style.left = building.left;
+      buildingEl.style.width = building.width;
+      buildingEl.style.height = building.height;
+      buildingEl.style.backgroundColor = building.color;
+      buildingEl.style.borderRadius = '2px';
+      buildingEl.style.zIndex = '1';
+      mapBox.appendChild(buildingEl);
+    });
+  }
+
+  function paintOffices() {
+    officesList.innerHTML = '';
+    offices.forEach((office, index) => {
+      const card = document.createElement('div');
+      card.className = 'office-card';
+      card.innerHTML = `
+        <div class="office-header">
+          <div class="office-number">${index + 1}</div>
+          <div class="office-name">${office.name}</div>
+        </div>
+        <div class="office-address">${office.address}</div>
+        <div class="office-services">
+          ${office.services.map(service => `<span class="service-tag">${service}</span>`).join('')}
+        </div>
+        <div class="office-contact">
+          <div class="office-lead">${office.lead}</div>
+          <a href="tel:${office.phone}" class="office-phone">${office.phone}</a>
+        </div>
+        <div class="office-hours">${office.workingHours}</div>
+      `;
+      officesList.appendChild(card);
+    });
+  }
+
+  let currentModal = null;
+
+  paintMap();
+  paintOffices();
+
+  // Map pin interactions
+  mapBox.addEventListener('click', (e) => {
+    const pin = e.target.closest('.map-pin');
+    if (!pin) return;
+    
+    const officeId = pin.getAttribute('data-office');
+    const office = offices.find(o => o.id === officeId);
+    if (!office) return;
+
+    // Удаляем существующие модальные окна
+    if (currentModal) {
+      currentModal.remove();
+      currentModal = null;
+    }
+
+    // Create modal
+    const modal = document.createElement('div');
+    modal.className = 'office-modal-overlay';
+    modal.innerHTML = `
+      <div class="office-modal">
+        <div class="office-modal-header">
+          <h3>${office.name}</h3>
+          <button class="office-modal-close" aria-label="Закрыть">&times;</button>
+        </div>
+        <div class="office-modal-content">
+          <div class="office-info-section">
+            <h4>Адрес</h4>
+            <p>${office.address}</p>
+          </div>
+          <div class="office-info-section">
+            <h4>Заведующий отделением</h4>
+            <p>${office.lead}</p>
+          </div>
+          <div class="office-info-section">
+            <h4>Номер телефона</h4>
+            <p><a href="tel:${office.phone}" class="office-phone-link">${office.phone}</a></p>
+          </div>
+          <div class="office-info-section">
+            <h4>Оказываемые услуги</h4>
+            <div class="office-services-list">
+              ${office.services.map(service => `<span class="office-service-tag">${service}</span>`).join('')}
+            </div>
+          </div>
+          <div class="office-info-section">
+            <h4>Часы работы</h4>
+            <p>${office.workingHours}</p>
+          </div>
+        </div>
+      </div>
+    `;
+    
+    document.body.appendChild(modal);
+    currentModal = modal;
+    
+    const closeBtn = modal.querySelector('.office-modal-close');
+    const overlay = modal;
+    
+    closeBtn.addEventListener('click', () => {
+      modal.remove();
+      currentModal = null;
+    });
+    
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        modal.remove();
+        currentModal = null;
+      }
+    });
+  });
+
+  // Close modal on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && currentModal) {
+      currentModal.remove();
+      currentModal = null;
+    }
+  });
+}
+
+// Инициализация при загрузке страницы
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', function() {
+    initRegion();
+  });
+} else {
+  initRegion();
+}
+
+// Экспортируем для использования в других скриптах
+if (typeof window !== 'undefined') {
+  window.initRegion = initRegion;
+}

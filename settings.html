@@ -13,10 +13,9 @@
         // Применяем настройки до загрузки страницы, чтобы избежать мерцания
         (function() {
             const savedTheme = localStorage.getItem('theme') || 'light';
-            const savedLanguage = localStorage.getItem('language') || 'ru';
             const isDark = savedTheme === 'dark' || (savedTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
             
-            document.documentElement.lang = savedLanguage;
+            document.documentElement.lang = 'ru';
             
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('theme-dark');
@@ -185,28 +184,6 @@
             </section>
 
             <section class="settings-section">
-                <div class="card">
-                    <div class="card-header">
-                        <h2 class="card-title" data-i18n="settings-language">Язык</h2>
-                    </div>
-                    <div class="settings-options">
-                        <label class="settings-option">
-                            <input type="radio" name="language" value="ru" checked>
-                            <span class="option-label">
-                                <span class="option-name">Русский</span>
-                                <span class="option-desc">Русский язык</span>
-                            </span>
-                        </label>
-                        <label class="settings-option">
-                            <input type="radio" name="language" value="en">
-                            <span class="option-label">
-                                <span class="option-name">English</span>
-                                <span class="option-desc">English language</span>
-                            </span>
-                        </label>
-                    </div>
-                </div>
-
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title" data-i18n="settings-theme">Тема оформления</h2>
