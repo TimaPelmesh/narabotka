@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Техподдержка | Альфа-Банк Инвестиции</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="logo.png" alt="Альфа-Банк" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="logo-text-fallback" style="display: none; flex-direction: column;">
+                        <span class="logo-text">АЛЬФА</span>
+                        <span class="logo-subtitle">Инвестиции</span>
+                    </div>
+                </div>
+                <nav class="nav nav-desktop">
+                    <a href="index.html" class="nav-link">Дашборд</a>
+                    <a href="portfolio.html" class="nav-link">Портфель</a>
+                    <a href="analytics.html" class="nav-link">Аналитика</a>
+                    <a href="calculator.html" class="nav-link">Калькулятор</a>
+                    <a href="settings.html" class="nav-link">Настройки</a>
+                </nav>
+                <div class="user-profile">
+                    <div class="user-avatar" id="userMenuBtn">ИИ</div>
+                    <div class="user-menu" id="userMenu">
+                        <div class="user-menu-welcome">
+                            <div class="user-menu-greeting">Добро пожаловать,</div>
+                            <div class="user-menu-name">Иван Иванович</div>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="user-menu-mobile">
+                            <a href="index.html" class="menu-item">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                    <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                    <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                    <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                </svg>
+                                Дашборд
+                            </a>
+                            <a href="portfolio.html" class="menu-item">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M21 16V8C20.9996 7.64928 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64928 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Портфель
+                            </a>
+                            <a href="analytics.html" class="menu-item">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M9 3V21" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M7 13L11 9L14 12L21 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                                Аналитика
+                            </a>
+                            <a href="calculator.html" class="menu-item">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M8 7H16M8 11H16M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Калькулятор
+                            </a>
+                            <a href="settings.html" class="menu-item">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                </svg>
+                                Настройки
+                            </a>
+                        </div>
+                        <div class="menu-divider"></div>
+                        <div class="menu-section-title">Дополнительно</div>
+                        <a href="community.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/>
+                                <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 3.13C16.8604 3.35031 17.623 3.85071 18.1676 4.55232C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89318 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Сообщество
+                        </a>
+                        <a href="vault.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="7" width="18" height="14" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M8 7V5C8 3.89543 8.89543 3 10 3H14C15.1046 3 16 3.89543 16 5V7" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="14" r="2" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Документы
+                        </a>
+                        <a href="meetings.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Встречи
+                        </a>
+                        <a href="office.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 22V12H15V22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Офис 2.0
+                        </a>
+                        <a href="region.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" stroke="currentColor" stroke-width="2"/>
+                                <circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            Регион и офисы
+                        </a>
+                        <div class="menu-divider"></div>
+                        <a href="about.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 16V12M12 8H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            О сайте
+                        </a>
+                        <a href="support.html" class="menu-item active">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Техподдержка
+                        </a>
+                        <div class="menu-divider"></div>
+                        <a href="#" class="menu-item menu-item-danger">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Выйти
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+    <div class="container">
+        <!-- Main Content -->
+        <main class="main-content">
+            <section class="support-section">
+                <div class="support-header">
+                    <h1 class="support-title">Техподдержка</h1>
+                    <p class="support-subtitle">Мы всегда готовы помочь вам</p>
+                </div>
+
+                <div class="support-grid">
+                    <div class="support-card">
+                        <h2 class="support-card-title">Способы связи</h2>
+                        <div class="support-contacts">
+                            <div class="support-contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M4 4H20C21.1 4 22 4.9 22 6V18C22 19.1 21.1 20 20 20H4C2.9 20 2 19.1 2 18V6C2 4.9 2.9 4 4 4Z" stroke="#EF3124" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        <path d="M22 6L12 13L2 6" stroke="#EF3124" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Email</div>
+                                    <div class="contact-value">support@alfabank.ru</div>
+                                    <div class="contact-note">Ответим в течение 24 часов</div>
+                                </div>
+                            </div>
+                            <div class="support-contact-item">
+                                <div class="contact-icon">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M22 16.92V19.92C22.0011 20.1985 21.9441 20.4742 21.8325 20.7292C21.7209 20.9842 21.5573 21.2131 21.352 21.4008C21.1467 21.5885 20.9042 21.7307 20.6397 21.8182C20.3752 21.9057 20.095 21.9366 19.82 21.91C16.7428 21.5856 13.787 20.5341 11.19 18.85C8.77382 17.3147 6.72533 15.2662 5.19 12.85C3.49997 10.2412 2.44824 7.27099 2.12 4.18C2.09344 3.90514 2.12438 3.62498 2.21188 3.36054C2.29938 3.0961 2.44151 2.85367 2.62916 2.64839C2.81681 2.44312 3.04572 2.27957 3.30072 2.16799C3.55572 2.05641 3.83142 1.99944 4.11 2H7.11C7.59374 1.99522 8.06803 2.16708 8.43351 2.48353C8.79899 2.79998 9.03029 3.23945 9.08 3.72C9.20479 4.68007 9.43906 5.62274 9.78 6.53C9.97673 7.06787 10.0265 7.64447 9.92469 8.20492C9.82288 8.76537 9.57275 9.29033 9.2 9.73L7.74 11.19C9.38071 13.7337 11.6163 15.9693 14.16 17.61L15.62 16.15C16.0597 15.7773 16.5846 15.5271 17.1451 15.4253C17.7055 15.3235 18.2821 15.3733 18.82 15.57C19.7273 15.911 20.6699 16.1452 21.63 16.27C22.1182 16.3214 22.5661 16.5581 22.8882 16.9303C23.2103 17.3025 23.3842 17.7842 23.38 18.28L22 16.92Z" stroke="#EF3124" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                                <div class="contact-info">
+                                    <div class="contact-label">Телефон</div>
+                                    <div class="contact-value">+7 (495) 788-88-88</div>
+                                    <div class="contact-note">Пн-Пт: 9:00 - 18:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="support-card">
+                        <h2 class="support-card-title">Сообщить о проблеме</h2>
+                        <button class="support-dialog-btn" id="supportDialogBtn">Открыть форму обратной связи</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025 Альфа-Банк. Прототип инвестиционного портала. Команда Кэтмэны</p>
+        </div>
+    </footer>
+
+    <!-- Support Dialog -->
+    <div class="support-dialog-overlay" id="supportDialogOverlay">
+        <div class="support-dialog" id="supportDialog">
+            <div class="support-dialog-header">
+                <h2 class="support-dialog-title">Сообщить о проблеме</h2>
+                <button class="support-dialog-close" id="supportDialogClose">
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+            <form class="support-dialog-form" id="supportForm">
+                <div class="form-group">
+                    <label for="supportEmail">Ваш email</label>
+                    <input type="email" id="supportEmail" name="email" placeholder="your@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="supportProblem">Опишите проблему</label>
+                    <textarea id="supportProblem" name="problem" placeholder="Начните вводить описание проблемы..." rows="4" required></textarea>
+                    <div class="problem-suggestions" id="problemSuggestions"></div>
+                </div>
+                <div class="form-group">
+                    <label for="supportCategory">Категория</label>
+                    <select id="supportCategory" name="category">
+                        <option value="">Автоматический выбор</option>
+                        <option value="technical">Техническая проблема</option>
+                        <option value="account">Вопрос по аккаунту</option>
+                        <option value="portfolio">Портфель и инвестиции</option>
+                        <option value="other">Другое</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="supportDialogCancel">Отмена</button>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="settings.js"></script>
+    <script src="script.js"></script>
+    <script src="support.js"></script>
+</body>
+</html>
+

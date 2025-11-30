@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Офис 2.0 | Альфа-Банк Инвестиции</title>
+    <link rel="icon" href="icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        // Применяем сохраненные настройки до загрузки страницы
+        (function() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const savedLanguage = localStorage.getItem('language') || 'ru';
+            document.documentElement.lang = savedLanguage;
+            const isDark = savedTheme === 'dark' || (savedTheme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('theme-dark');
+            } else if (savedTheme === 'light') {
+                document.documentElement.classList.add('theme-light');
+            } else if (savedTheme === 'auto') {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                document.documentElement.classList.add(prefersDark ? 'theme-dark' : 'theme-light');
+            }
+            
+            if (isDark) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    const logoImages = document.querySelectorAll('.logo-img');
+                    logoImages.forEach(img => {
+                        if (!img.dataset.originalSrc) {
+                            img.dataset.originalSrc = img.src;
+                        }
+                        img.src = 'logo_dark.png';
+                    });
+                });
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <img src="logo.png" alt="Альфа-Банк" class="logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="logo-text-fallback" style="display: none; flex-direction: column;">
+                    <span class="logo-text">АЛЬФА</span>
+                    <span class="logo-subtitle">Инвестиции</span>
+                </div>
+            </div>
+            <nav class="nav nav-desktop">
+                <a href="index.html" class="nav-link">Дашборд</a>
+                <a href="portfolio.html" class="nav-link">Портфель</a>
+                <a href="analytics.html" class="nav-link">Аналитика</a>
+                <a href="calculator.html" class="nav-link">Калькулятор</a>
+                <a href="settings.html" class="nav-link">Настройки</a>
+            </nav>
+            <div class="user-profile">
+                <div class="user-avatar" id="userMenuBtn">ИИ</div>
+                <div class="user-menu" id="userMenu">
+                    <div class="user-menu-welcome">
+                        <div class="user-menu-greeting" data-i18n="menu-welcome">Добро пожаловать,</div>
+                        <div class="user-menu-name">Иван Иванович</div>
+                    </div>
+                    <div class="menu-divider"></div>
+                    <div class="user-menu-mobile">
+                        <a href="index.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                <rect x="14" y="3" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                <rect x="3" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                                <rect x="14" y="14" width="7" height="7" stroke="currentColor" stroke-width="2"/>
+                            </svg>
+                            <span data-i18n="nav-dashboard">Дашборд</span>
+                        </a>
+                        <a href="portfolio.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 16V8C20.9996 7.64928 20.9071 7.30481 20.7315 7.00116C20.556 6.69751 20.3037 6.44536 20 6.27L13 2.27C12.696 2.09446 12.3511 2.00205 12 2.00205C11.6489 2.00205 11.304 2.09446 11 2.27L4 6.27C3.69626 6.44536 3.44398 6.69751 3.26846 7.00116C3.09294 7.30481 3.00036 7.64928 3 8V16C3.00036 16.3507 3.09294 16.6952 3.26846 16.9988C3.44398 17.3025 3.69626 17.5546 4 17.73L11 21.73C11.304 21.9055 11.6489 21.9979 12 21.9979C12.3511 21.9979 12.696 21.9055 13 21.73L20 17.73C20.3037 17.5546 20.556 17.3025 20.7315 16.9988C20.9071 16.6952 20.9996 16.3507 21 16Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span data-i18n="nav-portfolio">Портфель</span>
+                        </a>
+                        <a href="analytics.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M3 9H21" stroke="currentColor" stroke-width="2"/>
+                                <path d="M9 3V21" stroke="currentColor" stroke-width="2"/>
+                                <path d="M7 13L11 9L14 12L21 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span data-i18n="nav-analytics">Аналитика</span>
+                        </a>
+                        <a href="calculator.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M8 7H16M8 11H16M8 15H12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span data-i18n="nav-calculator">Калькулятор</span>
+                        </a>
+                        <a href="settings.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span data-i18n="nav-settings">Настройки</span>
+                        </a>
+                    </div>
+                    <div class="menu-divider"></div>
+                    <div class="user-menu-additional">
+                        <a href="meetings.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="3" y="4" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                                <path d="M16 2V6M8 2V6M3 10H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                            <span data-i18n="menu-meetings">Встречи</span>
+                        </a>
+                        <a href="office.html" class="menu-item">
+                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            <span data-i18n="menu-office">Офис 2.0</span>
+                        </a>
+                    </div>
+                    <div class="menu-divider"></div>
+                    <a href="#" class="menu-item menu-item-danger">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span data-i18n="menu-logout">Выйти</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <h1 class="welcome-title" data-i18n="office-title">Физический офис 2.0</h1>
+            <p class="welcome-subtitle" data-i18n="office-subtitle">Запланируйте визит, система подготовит документы заранее</p>
+
+            <!-- Visit Form -->
+            <div class="card">
+                <form class="calculator-form" id="visitForm">
+                    <div class="form-group">
+                        <label for="goal" class="form-label" data-i18n="office-goal">Цель визита</label>
+                        <select id="goal" name="goal" class="form-select" required>
+                            <option value="" disabled selected data-i18n="office-select-goal">Выберите цель</option>
+                            <option value="open_ip_credit" data-i18n="office-goal-ip-credit">Открыть ИП + получить кредит</option>
+                            <option value="open_ip" data-i18n="office-goal-ip">Открыть ИП</option>
+                            <option value="credit" data-i18n="office-goal-credit">Получить кредит</option>
+                            <option value="consult_tax" data-i18n="office-goal-tax">Налоговая консультация</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="date" class="form-label" data-i18n="office-date">Дата визита</label>
+                        <input id="date" type="date" class="form-input" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="visitTime" class="form-label" data-i18n="office-time">Время визита</label>
+                        <input id="visitTime" type="time" class="form-input" required />
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" data-i18n="office-docs">Подготовленные документы</label>
+                        <div id="docs" class="chips-container"></div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" data-i18n="office-book">Записаться</button>
+                        <button type="button" class="btn btn-secondary" id="arGuideBtn" data-i18n="office-ar">AR‑навигация</button>
+                    </div>
+                    <p class="hint" id="arHint" hidden data-i18n="office-ar-hint">
+                        Пройдите к зоне налогового консультанта. Ваш специалист — Мария, ждёт в переговорной 3.
+                    </p>
+                </form>
+            </div>
+
+            <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); margin-top: 32px;">
+                <!-- Appointments List -->
+                <div class="card">
+                    <h2 class="card-title" data-i18n="office-appointments">Ваши записи</h2>
+                    <div class="appointments-list" id="appointmentsList">
+                        <!-- Будет заполнено через JS -->
+                    </div>
+                </div>
+
+                <!-- Services -->
+                <div class="card">
+                    <h2 class="card-title" data-i18n="office-services">Доступные услуги</h2>
+                    <div class="services-grid">
+                        <div class="service-item" data-service="ip">
+                            <div class="service-item-header">
+                                <div class="service-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M3 13h2v8H3zm4-10h10v18H7zm2 2v2h2V5zm0 4v2h2V9zm0 4v2h2v-2zM3 9h2v2H3zm0-4h2v2H3zm0 8h2v2H3zm14 6v-2h2v2z" fill="#ef3124"/>
+                                    </svg>
+                                </div>
+                                <div class="service-content">
+                                    <h4 data-i18n="service-ip">Открытие ИП</h4>
+                                    <p data-i18n="service-ip-desc">Полное сопровождение регистрации</p>
+                                    <span class="service-time">30-45 мин</span>
+                                </div>
+                            </div>
+                            <button class="service-btn btn btn-primary btn-sm" data-service="ip" data-i18n="office-book-service">Записаться</button>
+                        </div>
+                        <div class="service-item" data-service="credit">
+                            <div class="service-item-header">
+                                <div class="service-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="#ef3124"/>
+                                    </svg>
+                                </div>
+                                <div class="service-content">
+                                    <h4 data-i18n="service-credit">Кредитование</h4>
+                                    <p data-i18n="service-credit-desc">Подбор и оформление кредита</p>
+                                    <span class="service-time">20-30 мин</span>
+                                </div>
+                            </div>
+                            <button class="service-btn btn btn-primary btn-sm" data-service="credit" data-i18n="office-book-service">Записаться</button>
+                        </div>
+                        <div class="service-item" data-service="tax">
+                            <div class="service-item-header">
+                                <div class="service-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zm2.5-9H18V1h-2v1H8V1H6v1H4.5C3.67 2 3 2.67 3 3.5v15c0 .83.67 1.5 1.5 1.5h15c.83 0 1.5-.67 1.5-1.5v-15c0-.83-.67-1.5-1.5-1.5zM19 18.5H5V8h14v10.5z" fill="#ef3124"/>
+                                    </svg>
+                                </div>
+                                <div class="service-content">
+                                    <h4 data-i18n="service-tax">Налоговые консультации</h4>
+                                    <p data-i18n="service-tax-desc">Помощь с налогообложением</p>
+                                    <span class="service-time">15-25 мин</span>
+                                </div>
+                            </div>
+                            <button class="service-btn btn btn-primary btn-sm" data-service="tax" data-i18n="office-book-service">Записаться</button>
+                        </div>
+                        <div class="service-item" data-service="docs">
+                            <div class="service-item-header">
+                                <div class="service-icon">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M14 2H6a2 2 0 0 0-2 2v16l4-4h6a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2m4 4h2v10h-2V6m0 12h2v2h-2z" fill="#ef3124"/>
+                                    </svg>
+                                </div>
+                                <div class="service-content">
+                                    <h4 data-i18n="service-docs">Документооборот</h4>
+                                    <p data-i18n="service-docs-desc">Подготовка и подача документов</p>
+                                    <span class="service-time">10-20 мин</span>
+                                </div>
+                            </div>
+                            <button class="service-btn btn btn-primary btn-sm" data-service="docs" data-i18n="office-book-service">Записаться</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="about.html" class="footer-link" data-i18n="menu-about">О сайте</a>
+                <a href="support.html" class="footer-link" data-i18n="menu-support">Техподдержка</a>
+            </div>
+            <p class="footer-copyright">2025 | Кэтмэны | "Ключ"</p>
+        </div>
+    </footer>
+
+    <script src="settings.js"></script>
+    <script src="script.js"></script>
+    <script src="office.js"></script>
+</body>
+</html>
+
