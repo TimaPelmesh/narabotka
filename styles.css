@@ -2368,11 +2368,11 @@ body.privacy-mode .eye-closed {
 }
 
 .theme-dark .user-menu-name {
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .menu-item {
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .menu-item:hover {
@@ -2381,7 +2381,7 @@ body.privacy-mode .eye-closed {
 
 .theme-dark .menu-item.active {
     background-color: var(--alpha-red);
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .menu-item.active:hover {
@@ -2390,35 +2390,11 @@ body.privacy-mode .eye-closed {
 }
 
 .theme-dark .menu-item svg {
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .menu-item.active svg {
-    color: var(--alpha-white);
-}
-
-.theme-dark .menu-section-title {
-    color: rgba(255, 255, 255, 0.6);
-}
-
-.theme-dark .menu-divider {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.theme-dark .menu-item-danger {
-    color: var(--alpha-red);
-}
-
-.theme-dark .menu-item-danger:hover {
-    background-color: rgba(239, 49, 36, 0.2);
-}
-
-.theme-dark .menu-item svg {
-    color: var(--alpha-white);
-}
-
-.theme-dark .menu-item.active svg {
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .menu-section-title {
@@ -2474,7 +2450,7 @@ body.privacy-mode .eye-closed {
 .theme-dark .period-btn.active,
 .theme-dark .filter-btn.active {
     background-color: var(--alpha-red);
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .table-header,
@@ -4514,7 +4490,7 @@ body.privacy-mode .eye-closed {
 .theme-dark .discussion-content h4,
 .theme-dark .partner-info strong,
 .theme-dark .event-info strong {
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .news-content p,
@@ -4548,13 +4524,13 @@ body.privacy-mode .eye-closed {
 .theme-dark .message-content {
     background: #333;
     border-color: #444;
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .chat-popup-form input {
     background: #2a2a2a;
     border-color: #444;
-    color: var(--alpha-white);
+    color: var(--alpha-black);
 }
 
 .theme-dark .chat-popup-input {
@@ -4564,6 +4540,29 @@ body.privacy-mode .eye-closed {
 
 .theme-dark .list .muted {
     color: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .form-label {
+    color: var(--alpha-black);
+}
+
+.theme-dark .form-input {
+    background-color: var(--alpha-white);
+    border-color: var(--alpha-light-gray);
+    color: var(--alpha-black);
+}
+
+.theme-dark .form-input::placeholder {
+    color: var(--alpha-dark-gray);
+}
+
+.theme-dark .chat-popup-header h4,
+.theme-dark .chat-popup-info h4 {
+    color: white;
+}
+
+.theme-dark .chat-popup-status {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Map styles from наработки */
