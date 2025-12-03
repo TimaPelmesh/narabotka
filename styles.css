@@ -178,6 +178,8 @@ body {
     visibility: hidden;
     transform: translateY(-10px);
     transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+    max-height: calc(100vh - 80px);
+    overflow-y: auto;
     z-index: 1000;
 }
 
