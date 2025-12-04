@@ -205,18 +205,10 @@
     function renderEvents() {
         if (!calendar) return;
         
-        // Remove existing events
+        // Удаляем все элементы с текстом встреч (если они были добавлены ранее)
+        // Цветовая индикация уже добавлена в buildCalendar через класс has-meeting
+        // Текст названия встречи не добавляем - только визуальная пометка (цвет и точка)
         calendar.querySelectorAll('.event').forEach(e => e.remove());
-        
-        meetings.forEach(meeting => {
-            const target = calendar.querySelector(`.calendar-day[data-date="${meeting.date}"]`);
-            if (!target) return;
-            
-            const eventEl = document.createElement('span');
-            eventEl.className = 'event';
-            eventEl.textContent = meeting.title;
-            target.appendChild(eventEl);
-        });
     }
     
     function renderMeetings() {
