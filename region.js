@@ -203,24 +203,51 @@ async function initRegion() {
     
     const closeBtn = modal.querySelector('.office-modal-close');
     const overlay = modal;
+    const modalContent = modal.querySelector('.office-modal');
     
-    closeBtn.addEventListener('click', () => {
-      modal.remove();
+    if (!closeBtn || !overlay || !modalContent) {
+      console.error('Modal elements not found');
+      return;
+    }
+    
+    // Функция закрытия модального окна - немедленное удаление
+    const closeModal = (e) => {
+      if (e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      
+      if (!currentModal || currentModal !== overlay) return;
+      
+      // Немедленно удаляем элемент без анимации
+      if (overlay.parentNode) {
+        overlay.remove();
+      }
       currentModal = null;
-    });
+    };
     
+    // Обработчик закрытия по кнопке
+    closeBtn.addEventListener('click', closeModal);
+    
+    // Обработчик закрытия по клику на overlay (но не на сам модальный контент)
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
-        modal.remove();
-        currentModal = null;
+        closeModal(e);
       }
+    });
+    
+    // Предотвращаем закрытие при клике на сам модальный контент
+    modalContent.addEventListener('click', (e) => {
+      e.stopPropagation();
     });
   });
 
-  // Close modal on Escape
+  // Close modal on Escape - немедленное удаление
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && currentModal) {
-      currentModal.remove();
+      if (currentModal.parentNode) {
+        currentModal.remove();
+      }
       currentModal = null;
     }
   });

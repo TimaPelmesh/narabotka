@@ -157,8 +157,19 @@
                     <h3 class="card-title">Найдите партнёров</h3>
                     <form class="calculator-form" id="partnerForm">
                         <div class="form-group">
-                            <label for="partnerQuery" class="form-label">Запрос</label>
-                            <input id="partnerQuery" type="text" placeholder="логистика, поставки, маркетинг" class="form-input" />
+                            <label for="partnerCategory" class="form-label">Категория</label>
+                            <div class="category-select-wrapper">
+                                <select id="partnerCategory" class="form-select" required>
+                                    <option value="">Выберите категорию</option>
+                                    <option value="поставки">Поставки</option>
+                                    <option value="логистика">Логистика</option>
+                                    <option value="маркетинг">Маркетинг</option>
+                                    <option value="технологии">Технологии</option>
+                                    <option value="бухгалтерия">Бухгалтерия</option>
+                                    <option value="юридические услуги">Юридические услуги</option>
+                                    <option value="консалтинг">Консалтинг</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="form-actions">
                             <button type="submit" class="btn btn-primary" id="findPartnersBtn">Найти</button>
@@ -169,10 +180,6 @@
                 
                 <div class="card">
                     <h3 class="card-title">Мероприятия</h3>
-                    <div class="events-controls">
-                        <button class="btn btn-sm" id="addEventBtn">Добавить событие</button>
-                        <button class="btn btn-sm" id="filterEventsBtn">Фильтр</button>
-                    </div>
                     <ul class="list" id="eventsList"></ul>
                 </div>
             </div>
@@ -187,7 +194,18 @@
                                 <p>С 2025 года вводятся дополнительные льготы для ИП и ООО с оборотом до 10 млн рублей</p>
                                 <span class="news-time">2 часа назад</span>
                             </div>
-                            <button class="btn btn-sm news-action" data-action="like">Нравится</button>
+                            <div class="news-actions">
+                                <button class="btn btn-sm news-like" data-action="like" aria-label="Лайк">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H16.4262C17.907 22 19.1662 21.0726 19.3911 19.6244L20.4681 12.6244C20.7479 10.8568 19.3841 9.25 17.6034 9.25H13C12.4477 9.25 12 8.80228 12 8.25V5.75C12 4.23122 10.7688 3 9.25 3C8.58535 3 7.97614 3.35189 7.65198 3.93726L4.40626 9.97049C4.12268 10.4842 3.57431 10.75 3 10.75H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <button class="btn btn-sm news-dislike" data-action="dislike" aria-label="Дизлайк">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17 2V13M22 11V4C22 2.89543 21.1046 2 20 2H7.57377C6.09296 2 4.83384 2.92739 4.60892 4.37564L3.53188 11.3756C3.25213 13.1432 4.61588 14.75 6.39656 14.75H11C11.5523 14.75 12 15.1977 12 15.75V18.25C12 19.7688 13.2312 21 14.75 21C15.4146 21 16.0239 20.6481 16.348 20.0627L19.5937 14.0295C19.8773 13.5158 20.4257 13.25 21 13.25H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                         <div class="news-item">
                             <div class="news-content">
@@ -195,7 +213,18 @@
                                 <p>Средняя ставка по кредитам для бизнеса снизилась на 1.5% в декабре</p>
                                 <span class="news-time">5 часов назад</span>
                             </div>
-                            <button class="btn btn-sm news-action" data-action="like">Нравится</button>
+                            <div class="news-actions">
+                                <button class="btn btn-sm news-like" data-action="like" aria-label="Лайк">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M7 22V11M2 13V20C2 21.1046 2.89543 22 4 22H16.4262C17.907 22 19.1662 21.0726 19.3911 19.6244L20.4681 12.6244C20.7479 10.8568 19.3841 9.25 17.6034 9.25H13C12.4477 9.25 12 8.80228 12 8.25V5.75C12 4.23122 10.7688 3 9.25 3C8.58535 3 7.97614 3.35189 7.65198 3.93726L4.40626 9.97049C4.12268 10.4842 3.57431 10.75 3 10.75H2" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                                <button class="btn btn-sm news-dislike" data-action="dislike" aria-label="Дизлайк">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M17 2V13M22 11V4C22 2.89543 21.1046 2 20 2H7.57377C6.09296 2 4.83384 2.92739 4.60892 4.37564L3.53188 11.3756C3.25213 13.1432 4.61588 14.75 6.39656 14.75H11C11.5523 14.75 12 15.1977 12 15.75V18.25C12 19.7688 13.2312 21 14.75 21C15.4146 21 16.0239 20.6481 16.348 20.0627L19.5937 14.0295C19.8773 13.5158 20.4257 13.25 21 13.25H22" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

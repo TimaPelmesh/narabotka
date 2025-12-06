@@ -23,13 +23,11 @@
     }
     
     const findPartnersBtn = document.getElementById('findPartnersBtn');
-    const partnerQuery = document.getElementById('partnerQuery');
     const partnersList = document.getElementById('partnersList');
     const partnerForm = document.getElementById('partnerForm');
-    const addEventBtn = document.getElementById('addEventBtn');
-    const filterEventsBtn = document.getElementById('filterEventsBtn');
     const eventsList = document.getElementById('eventsList');
-    const newsActions = document.querySelectorAll('.news-action');
+    const newsLikes = document.querySelectorAll('.news-like');
+    const newsDislikes = document.querySelectorAll('.news-dislike');
     const discussionJoins = document.querySelectorAll('.discussion-join');
     const chatToggleBtn = document.getElementById('chatToggleBtn');
     const chatPopup = document.getElementById('chatPopup');
@@ -41,11 +39,27 @@
     
     // Данные для партнеров
     const partnersData = [
+        // Логистика
         { name: 'ООО "Логистик Плюс"', description: 'Грузоперевозки по России', category: 'логистика', rating: 4.8 },
+        { name: 'ООО "ТрансЭкспресс"', description: 'Экспресс-доставка и складские услуги', category: 'логистика', rating: 4.6 },
+        // Поставки
         { name: 'ИП Иванов А.В.', description: 'Поставки канцелярии', category: 'поставки', rating: 4.5 },
+        { name: 'ООО "Снабжение+"', description: 'Оптовые поставки офисной техники', category: 'поставки', rating: 4.7 },
+        // Маркетинг
         { name: 'Агентство "Маркетинг Про"', description: 'SMM и реклама', category: 'маркетинг', rating: 4.9 },
+        { name: 'ООО "Digital Solutions"', description: 'Контекстная реклама и SEO', category: 'маркетинг', rating: 4.8 },
+        // Технологии
         { name: 'ООО "ТехСервис"', description: 'IT-поддержка бизнеса', category: 'технологии', rating: 4.7 },
-        { name: 'ИП Петрова М.С.', description: 'Бухгалтерские услуги', category: 'бухгалтерия', rating: 4.6 }
+        { name: 'ООО "ВебСтудия"', description: 'Разработка сайтов и мобильных приложений', category: 'технологии', rating: 4.9 },
+        // Бухгалтерия
+        { name: 'ИП Петрова М.С.', description: 'Бухгалтерские услуги', category: 'бухгалтерия', rating: 4.6 },
+        { name: 'ООО "БухУчет Про"', description: 'Ведение учета и налоговое планирование', category: 'бухгалтерия', rating: 4.8 },
+        // Юридические услуги
+        { name: 'ООО "ЮрКонсалт"', description: 'Корпоративное право и регистрация', category: 'юридические услуги', rating: 4.9 },
+        { name: 'ИП Сидоров В.П.', description: 'Трудовое право и договоры', category: 'юридические услуги', rating: 4.7 },
+        // Консалтинг
+        { name: 'ООО "БизнесКонсалт"', description: 'Стратегическое планирование и аудит', category: 'консалтинг', rating: 4.8 },
+        { name: 'ООО "ЭкспертГрупп"', description: 'Финансовый консалтинг и оптимизация', category: 'консалтинг', rating: 4.9 }
     ];
     
     // Данные для мероприятий
@@ -59,20 +73,22 @@
         localStorage.setItem('community_events', JSON.stringify(eventsData));
     }
     
+    const partnerCategory = document.getElementById('partnerCategory');
+    
     // Поиск партнеров
     if (partnerForm) {
         partnerForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const query = partnerQuery.value.toLowerCase().trim();
-            if (!query) {
-                showToast('Введите запрос для поиска', 'error');
+            const category = partnerCategory ? partnerCategory.value.toLowerCase().trim() : '';
+            
+            if (!category) {
+                showToast('Выберите категорию для поиска', 'error');
                 return;
             }
             
+            // Фильтр по категории
             const filteredPartners = partnersData.filter(partner => 
-                partner.name.toLowerCase().includes(query) ||
-                partner.description.toLowerCase().includes(query) ||
-                partner.category.toLowerCase().includes(query)
+                partner.category.toLowerCase() === category
             );
             
             displayPartners(filteredPartners);
@@ -110,47 +126,6 @@
             btn.addEventListener('click', () => {
                 showToast('Функция связи будет доступна в следующих версиях');
             });
-        });
-    }
-    
-    // Добавление события
-    if (addEventBtn) {
-        addEventBtn.addEventListener('click', () => {
-            const title = prompt('Название мероприятия:');
-            if (!title) return;
-            
-            const date = prompt('Дата (YYYY-MM-DD):');
-            if (!date) return;
-            
-            const time = prompt('Время (HH:MM):');
-            if (!time) return;
-            
-            const newEvent = {
-                title,
-                date,
-                time,
-                participants: 0
-            };
-            
-            eventsData.unshift(newEvent);
-            localStorage.setItem('community_events', JSON.stringify(eventsData));
-            displayEvents();
-            showToast('Мероприятие добавлено');
-        });
-    }
-    
-    // Фильтр мероприятий
-    if (filterEventsBtn) {
-        filterEventsBtn.addEventListener('click', () => {
-            const filter = prompt('Фильтр по названию:');
-            if (!filter) return;
-            
-            const filteredEvents = eventsData.filter(event => 
-                event.title.toLowerCase().includes(filter.toLowerCase())
-            );
-            
-            displayEvents(filteredEvents);
-            showToast(`Найдено мероприятий: ${filteredEvents.length}`);
         });
     }
     
@@ -194,16 +169,39 @@
     }
     
     // Лайки новостей
-    newsActions.forEach(btn => {
+    newsLikes.forEach(btn => {
         btn.addEventListener('click', () => {
-            if (btn.classList.contains('liked')) {
-                btn.classList.remove('liked');
-                btn.textContent = 'Нравится';
+            const newsItem = btn.closest('.news-item');
+            const dislikeBtn = newsItem.querySelector('.news-dislike');
+            
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
                 showToast('Лайк убран');
             } else {
-                btn.classList.add('liked');
-                btn.textContent = 'Нравится ✓';
+                btn.classList.add('active');
+                if (dislikeBtn && dislikeBtn.classList.contains('active')) {
+                    dislikeBtn.classList.remove('active');
+                }
                 showToast('Лайк добавлен');
+            }
+        });
+    });
+    
+    // Дизлайки новостей
+    newsDislikes.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const newsItem = btn.closest('.news-item');
+            const likeBtn = newsItem.querySelector('.news-like');
+            
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                showToast('Дизлайк убран');
+            } else {
+                btn.classList.add('active');
+                if (likeBtn && likeBtn.classList.contains('active')) {
+                    likeBtn.classList.remove('active');
+                }
+                showToast('Дизлайк добавлен');
             }
         });
     });
@@ -218,7 +216,7 @@
             } else {
                 btn.classList.add('joined');
                 btn.textContent = 'Присоединились ✓';
-                showToast('Вы присоединились к обсуждению');
+                showToast('Вы скоро будете присоединены к обсуждению');
             }
         });
     });

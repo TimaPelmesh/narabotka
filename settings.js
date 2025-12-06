@@ -58,8 +58,8 @@ const translations = {
         // Калькулятор
         'calculator-title': 'Калькулятор возможностей',
         'calculator-subtitle': 'Оценка кредита и симулятор налоговой нагрузки',
-        'calculator-credit': 'Кредитный калькулятор',
-        'calculator-tax': 'Налоговый калькулятор',
+        'calculator-credit': 'Кредитный',
+        'calculator-tax': 'Налоговый',
         'calculator-credit-title': 'Какая сумма кредита мне доступна?',
         'calculator-credit-desc': 'Рассчитайте максимальную сумму кредита на основе вашего оборота',
         'calculator-tax-title': 'ИП или самозанятость?',

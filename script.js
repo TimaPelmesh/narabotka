@@ -432,29 +432,36 @@ document.querySelectorAll('.period-btn').forEach(btn => {
     });
 });
 
-// Animate stat cards on load
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -50px 0px'
-};
+// Animate stat cards on load - отключено для мгновенного отображения
+// const observerOptions = {
+//     threshold: 0.1,
+//     rootMargin: '0px 0px -50px 0px'
+// };
 
-const observer = new IntersectionObserver(function(entries) {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '0';
-            entry.target.style.transform = 'translateY(20px)';
-            setTimeout(() => {
-                entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
-            }, 100);
-            observer.unobserve(entry.target);
-        }
-    });
-}, observerOptions);
+// const observer = new IntersectionObserver(function(entries) {
+//     entries.forEach(entry => {
+//         if (entry.isIntersecting) {
+//             entry.target.style.opacity = '0';
+//             entry.target.style.transform = 'translateY(20px)';
+//             setTimeout(() => {
+//                 entry.target.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+//                 entry.target.style.opacity = '1';
+//                 entry.target.style.transform = 'translateY(0)';
+//             }, 100);
+//             observer.unobserve(entry.target);
+//         }
+//     });
+// }, observerOptions);
 
+// document.querySelectorAll('.stat-card, .chart-card, .distribution-card, .card, .action-card').forEach(card => {
+//     observer.observe(card);
+// });
+
+// Убеждаемся, что все элементы сразу видны
 document.querySelectorAll('.stat-card, .chart-card, .distribution-card, .card, .action-card').forEach(card => {
-    observer.observe(card);
+    card.style.opacity = '1';
+    card.style.transform = 'none';
+    card.style.transition = 'none';
 });
 
 // Add smooth scrolling
